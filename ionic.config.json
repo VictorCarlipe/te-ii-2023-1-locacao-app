@@ -1,0 +1,7 @@
+{
+  "name": "te-ii-2023-1-locacao-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
