@@ -1,0 +1,122 @@
+{
+  "aluno": [
+    {
+      "registration": 100000001,
+      "name": "Fulano de Tal",
+      "datebirth": "2000-01-01",
+      "gender": "M",
+      "email": "fulano.de.tal@hotmail.com",
+      "fone": "5548991919191",
+      "course": 8,
+      "phase": 5
+    },
+    {
+      "registration": 100000002,
+      "name": "Ciclano de Tal",
+      "datebirth": "2002-02-01",
+      "gender": "M",
+      "email": "ciclano.de.tal@outlook.com",
+      "fone": "5548991919191",
+      "course": 5,
+      "phase": 2
+    },
+    {
+      "registration": 100000003,
+      "name": "Beltrana das Quantas",
+      "datebirth": "1998-06-06",
+      "gender": "F",
+      "email": "beltrana.quantas@gmail.com",
+      "fone": "5548992929292",
+      "course": 1,
+      "phase": 6
+    },
+    {
+      "registration": 100000004,
+      "name": "Deltrano de Tal",
+      "datebirth": "1997-10-15",
+      "gender": "M",
+      "email": "deltrano@gmail.com",
+      "fone": "5548993939393",
+      "course": 4,
+      "phase": 7
+    },
+    {
+      "registration": 100000005,
+      "name": "Ciclana de Tal",
+      "datebirth": "1995-08-25",
+      "gender": "F",
+      "email": "ciclana.de.tal@hotmail.com",
+      "fone": "5548994949494",
+      "course": 2,
+      "phase": 3
+    }
+  ],
+
+  "local": [
+    {
+      "id": 1,
+      "nome": "Laborátorio 05",
+      "unit": "IV",
+      "capacity": 30,
+      "attributes": "0PMPMAQB"
+    },
+    {
+      "id": 2,
+      "nome": "Sala 22",
+      "unit": "II",
+      "capacity": 48,
+      "attributes": "0CLT"
+    },
+    {
+      "id": 3,
+      "nome": "Sala 33",
+      "unit": "III",
+      "capacity": 45,
+      "attributes": "0PMPQB"
+    },
+    {
+      "id": 4,
+      "nome": "Sala 16",
+      "unit": "I",
+      "capacity": 30,
+      "attributes": "0CQB"
+    },
+    {
+      "id": 5,
+      "nome": "Quadra Poli",
+      "unit": "X",
+      "capacity": 30,
+      "attributes": ""
+    }
+  ],
+
+  "locacao": [
+    {
+      "id": 1,
+      "locatario": 100000003,
+      "local": 2,
+      "initialDate": "2023-05-25 19:20:00",
+      "finalDate": "2023-05-25 20:30:00",
+      "objetivo": "MON",
+      "desciption": "Monitoria de Legislição Tributária"
+    },
+    {
+      "id": 2,
+      "locatario": 100000005,
+      "local": 1,
+      "initialDate": "2023-05-26 19:00:00",
+      "finalDate": "2023-05-25 21:00:00",
+      "objetivo": "MON",
+      "desciption": "Monitoria de Programação Orientada a Objetos"
+    },
+    {
+      "id": 3,
+      "locatario": 100000001,
+      "local": 5,
+      "initialDate": "2023-05-26 19:00:00",
+      "finalDate": "2023-05-25 21:00:00",
+      "objetivo": "TRE",
+      "desciption": "Treino de handebol para os jogos internos da Esucri"
+    }
+  ]
+}
