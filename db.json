@@ -1,5 +1,5 @@
 {
-  "aluno": [
+  "students": [
     {
       "registration": 100000001,
       "name": "Fulano de Tal",
@@ -52,7 +52,7 @@
     }
   ],
 
-  "local": [
+  "location": [
     {
       "id": 1,
       "nome": "Laborátorio 05",
@@ -90,7 +90,7 @@
     }
   ],
 
-  "locacao": [
+  "tenacy": [
     {
       "id": 1,
       "locatario": 100000003,

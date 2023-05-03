@@ -1,14 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { StudentInterface } from '../../type/student.interface';
+import { Subscription } from 'rxjs';
+import { AlertController, LoadingController, ToastController, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
+import { StudentService } from '../../service/student.service';
+import { LoaderIndicatorService } from 'src/app/shared/service/loader.inidcator.service';
 
 @Component({
   selector: 'app-student-list',
   templateUrl: './student-list.component.html',
-  styleUrls: ['./student-list.component.scss'],
 })
-export class StudentListComponent  implements OnInit {
+export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDestroy{
+  students: StudentInterface[] = [];
+  busyloader!: LoaderIndicatorService;
 
-  constructor() { }
+  subscriptions = new Subscription();
 
-  ngOnInit() {}
+  constructor(
+    private alertController: AlertController,
+    private toastController:ToastController,
+    private studentService: StudentService,
+    private loadingController: LoadingController
+  ) { }
 
+  ionViewDidLeave(): void {
+      this.students = []
+  }
+
+  ionViewWillEnter(): void {
+      this.list();
+  }
+
+  ngOnDestroy(): void {
+      this.subscriptions.unsubscribe();
+  }
+
+  async list(){
+    const busyLoader = await this.loadingController.create({ spinner: 'circular' })
+    busyLoader.present()
+
+    this.subscriptions.add(
+      this.studentService.getStudents().subscribe(async (students) => {
+        
+        this.students = students;
+        
+        const toast = await this.toastController.create({
+          color:'success',
+          message:'Lista de Alunos carregada com sucesso',
+          duration:600,
+          buttons:['x']
+        })
+        toast.present();
+        busyLoader.dismiss();
+      }, async() => {
+        const alert = await this.alertController.create({
+          header:'Erro!',
+          message:'Não foi possível carregar a lista de Alunos',
+          buttons:['Ok']
+        })
+        alert.present();
+        busyLoader.dismiss();
+      })
+    )
+  }
+
+  async remove(student: StudentInterface){
+    const alert = await this.alertController.create({
+      header: 'Confirmação de Exclusão',
+      message: `Deseja realmente excluir o aluno ${student.name}?`,
+      buttons: [
+        {
+          text: 'Sim',
+          handler:() => {
+          this.subscriptions.add(
+            this.studentService.remove(student).subscribe(() => this.list())
+          );
+         },
+        },
+      ],
+    });
+    alert.present();
+  }
 }
