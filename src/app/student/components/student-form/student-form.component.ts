@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StudentService } from '../../service/student.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonDatetime } from '@ionic/angular';
 import { LoadingService } from 'src/app/shared/service/loader.service';
 
 
@@ -111,14 +111,48 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
   private initializeForm(){
     this.studentForm = this.formBuilder.group({
       name: [
-        'Nome qualquer'
+        'Nome qualquer',
+        [
+          Validators.required,
+          Validators.maxLength(80)
+        ]
       ],
-      datebirth: '2000-01-01',
+      datebirth: [
+        '2000-01-01',
+        this.validMinAge()
+      ],
       gender: 'M',
-      email: 'nomequalquer@mailto.com',
-      fone: '48999999999',
-      course: 0,
-      phase: 0,
+      email: [
+        'nomequalquer@mailto.com',
+        Validators.email
+      ],
+      fone: [
+        '48999999999',
+        [ Validators.required,
+          Validators.minLength(11),
+        ]
+      ],
+      course: 'adm',
+      phase: '1',
     })
+  }
+
+  validMinAge(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const minute = 1000 * 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+      const year = day * 365;
+      
+      const value =  new Date(control.value)
+      const now = new Date(Date.now())
+      const diff = (now.getTime() / year - value.getTime() / year)
+      if (diff < 16){
+        return {invalidAge: value}
+      }else if(diff > 150){
+        return {invalidAge: value}
+      }
+      return null;
+    };
   }
 }
