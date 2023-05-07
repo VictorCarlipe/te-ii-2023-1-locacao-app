@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { LocationService } from '../../service/location.service';
 
 @Component({
   selector: 'app-location-form',
@@ -7,8 +10,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationFormComponent  implements OnInit {
 
-  constructor() { }
+  locationForm!: FormGroup
 
-  ngOnInit() {}
+  createMode: boolean = false;
+  editMode: boolean = false;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private locationService: LocationService,
+  ) {
+    
+   }
+
+  ngOnInit(): void {
+    const [url] = this.activatedRoute.snapshot.url;
+    this.editMode = url.path === 'edicao';
+    this.createMode = !this.editMode;
+
+    this.locationForm = this.formBuilder.group({
+      nome: 'Teste De Local',
+      unit: 'XXI',
+      capacity: 132,
+      attributes:  ''
+    })
+  }
+
+  save(): void {
+    console.log(this.locationForm.value);
+
+    this.locationService.save(this.locationForm.value).subscribe(
+      () => {
+        // TODO mensagem de sucesso
+        this.router.navigate(['./location'])
+      }
+    )
+  }
+
+  cancel(): void {
+    this.router.navigate(['./location'])
+  }
 
 }
