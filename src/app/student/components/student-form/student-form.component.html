@@ -1,3 +1,96 @@
-<p>
-  student-form works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>      
+    </ion-buttons>
+    <ion-title>
+      {{createMode ? 'Cadastro' : 'Edição'}} de Autor
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="studentForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nome:</ion-label>
+        <ion-input formControlName="name" placeholder="Digite seu nome"></ion-input>
+        <ion-note slot="error" *ngIf="studentForm.controls['name'].hasError('required')">O campo nome é obrigatório!</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Data de Nascimento:</ion-label>
+        <ion-datetime-button datetime="datebirth"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime formControlName="datebirth" id="datebirth" presentation="date" showDefaultButtons="true" doneText="Selecionar" cancelText="cancelar" showDafaultTitle="true">
+              <span slot="title">Selecione sua data de nascimento</span>
+            </ion-datetime>  
+          </ng-template>
+        </ion-modal>
+      </ion-item>        
+
+      <ion-item>
+        <ion-label position="floating">Gênero:</ion-label>
+        <ion-select formControlName="gender" placeholder="Selecione o seu gênero">
+          <ion-select-option value="F">Feminino</ion-select-option>
+          <ion-select-option value="M">Masculino</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">E-mail:</ion-label>
+        <ion-input formControlName="email" placeholder="Digite o seu e-mail"></ion-input>
+        <ion-note slot="error" *ngIf="studentForm.controls['email'].hasError('email')">Endereço de e-mail inválido!</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Telefone:</ion-label>
+        <ion-input formControlName="fone" placeHolder="Digite seu telefone" maxlength="11" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Curso:</ion-label>
+        <ion-select formControlName="course" placeholder="Selecione o seu curso">
+          <ion-select-option value="adm">Administração</ion-select-option>
+          <ion-select-option value="ccb">Ciências Contábeis</ion-select-option>
+          <ion-select-option value="enf">Enfermagem</ion-select-option>
+          <ion-select-option value="edf">Educação Física</ion-select-option>
+          <ion-select-option value="dir">Direito</ion-select-option>
+          <ion-select-option value="psi">Psicologia</ion-select-option>
+          <ion-select-option value="nut">Nutrição</ion-select-option>
+          <ion-select-option value="sis">Sis. de Informação</ion-select-option>    
+        </ion-select>
+        <ion-note slot="error" *ngIf="studentForm.controls['course'].hasError('required')">Escolha um curso!</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fase:</ion-label>
+        <ion-select formControlName="phase" placeHolder="Selecione a sua fase">
+          <ion-select-option value="1">1ª Fase</ion-select-option>
+          <ion-select-option value="2">2ª Fase</ion-select-option>
+          <ion-select-option value="3">3ª Fase</ion-select-option>
+          <ion-select-option value="4">4ª Fase</ion-select-option>
+          <ion-select-option value="5">5ª Fase</ion-select-option>
+          <ion-select-option value="6">6ª Fase</ion-select-option>
+          <ion-select-option value="7">7ª Fase</ion-select-option>
+          <ion-select-option value="8">8ª Fase</ion-select-option>
+        </ion-select>
+        <ion-note slot="error" *ngIf="studentForm.controls['phase'].hasError('required')">Escolha uma fase!</ion-note>
+      </ion-item>
+    </ion-list>
+
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button (click)="save()" [disabled]="studentForm.invalid">
+          <ion-icon name="save"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+      <ion-fab-button color="light" (click)="cancel()">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
+  </form>
+</ion-content>

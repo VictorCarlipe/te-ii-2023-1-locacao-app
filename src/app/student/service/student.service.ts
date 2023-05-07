@@ -8,15 +8,25 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class StudentService {
-  constructor(private httpClient: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getStudents(): Observable<StudentInterface[]>{
-    return this.httpClient.get<StudentInterface[]>(
-      `${environment.apiUrl}/students`
-    )
+  getStudent(id:number): Observable<StudentInterface>{
+    return this.http.get<StudentInterface>(`${environment.apiUrl}/student/${id}`);
   }
 
-  remove(student: StudentInterface):Observable<void> {
-    return this.httpClient.delete<void>(`${environment.apiUrl}/students/${student.registration}`)
+  getStudents(): Observable<StudentInterface[]>{
+    return this.http.get<StudentInterface[]>(`${environment.apiUrl}/student`);
+  }
+
+  save(student: StudentInterface): Observable<StudentInterface>{
+    return this.http.post<StudentInterface>(`${environment.apiUrl}/student`, student);
+  }
+
+  update(student: StudentInterface): Observable<StudentInterface>{
+    return this.http.put<StudentInterface>(`${environment.apiUrl}/student/${student.id}`, student);
+  }
+
+  remove({id}: StudentInterface):Observable<void> {
+    return this.http.delete<void>(`${environment.apiUrl}/student/${id}`)
   }
 }

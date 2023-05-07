@@ -1,57 +1,46 @@
 {
-  "students": [
+  "student": [
     {
-      "registration": 100000001,
+      "id": 100000001,
       "name": "Fulano de Tal",
       "datebirth": "2000-01-01",
       "gender": "M",
       "email": "fulano.de.tal@hotmail.com",
       "fone": "5548991919191",
-      "course": 8,
+      "course": "sis",
       "phase": 5
     },
     {
-      "registration": 100000002,
+      "id": 100000002,
       "name": "Ciclano de Tal",
       "datebirth": "2002-02-01",
       "gender": "M",
       "email": "ciclano.de.tal@outlook.com",
       "fone": "5548991919191",
-      "course": 5,
+      "course": "adm",
       "phase": 2
     },
     {
-      "registration": 100000003,
-      "name": "Beltrana das Quantas",
-      "datebirth": "1998-06-06",
-      "gender": "F",
-      "email": "beltrana.quantas@gmail.com",
-      "fone": "5548992929292",
-      "course": 1,
-      "phase": 6
-    },
-    {
-      "registration": 100000004,
+      "id": 100000004,
       "name": "Deltrano de Tal",
       "datebirth": "1997-10-15",
       "gender": "M",
       "email": "deltrano@gmail.com",
       "fone": "5548993939393",
-      "course": 4,
+      "course": "nut",
       "phase": 7
     },
     {
-      "registration": 100000005,
+      "id": 100000005,
       "name": "Ciclana de Tal",
       "datebirth": "1995-08-25",
       "gender": "F",
       "email": "ciclana.de.tal@hotmail.com",
       "fone": "5548994949494",
-      "course": 2,
+      "course": "sis",
       "phase": 3
     }
   ],
-
   "location": [
     {
       "id": 1,
@@ -89,7 +78,6 @@
       "attributes": ""
     }
   ],
-
   "tenacy": [
     {
       "id": 1,

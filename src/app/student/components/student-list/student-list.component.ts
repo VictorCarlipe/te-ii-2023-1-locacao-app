@@ -3,7 +3,7 @@ import { StudentInterface } from '../../type/student.interface';
 import { Subscription } from 'rxjs';
 import { AlertController, LoadingController, ToastController, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
 import { StudentService } from '../../service/student.service';
-import { LoaderIndicatorService } from 'src/app/shared/service/loader.inidcator.service';
+import { LoadingService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-student-list',
@@ -11,7 +11,7 @@ import { LoaderIndicatorService } from 'src/app/shared/service/loader.inidcator.
 })
 export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDestroy{
   students: StudentInterface[] = [];
-  busyloader!: LoaderIndicatorService;
+  busyLoader!: LoadingService;
 
   subscriptions = new Subscription();
 
@@ -38,8 +38,8 @@ export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDes
     const busyLoader = await this.loadingController.create({ spinner: 'circular' })
     busyLoader.present()
 
-    this.subscriptions.add(
-      this.studentService.getStudents().subscribe(async (students) => {
+    const subscription = this.studentService.getStudents()
+      .subscribe(async (students) => {
         
         this.students = students;
         
@@ -50,7 +50,7 @@ export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDes
           buttons:['x']
         })
         toast.present();
-        busyLoader.dismiss();
+        busyLoader.dismiss()
       }, async() => {
         const alert = await this.alertController.create({
           header:'Erro!',
@@ -58,9 +58,9 @@ export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDes
           buttons:['Ok']
         })
         alert.present();
-        busyLoader.dismiss();
-      })
-    )
+        busyLoader.dismiss()
+      });
+      this.subscriptions.add(subscription);
   }
 
   async remove(student: StudentInterface){
@@ -76,6 +76,7 @@ export class StudentListComponent  implements ViewDidLeave, ViewWillEnter, OnDes
           );
          },
         },
+        'Não',
       ],
     });
     alert.present();
