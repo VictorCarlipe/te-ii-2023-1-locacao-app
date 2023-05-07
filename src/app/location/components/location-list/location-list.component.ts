@@ -3,7 +3,7 @@ import { LocationInterface } from '../../type/location.interface';
 import { Subscription } from 'rxjs';
 import { AlertController, LoadingController, ToastController, ViewDidLeave, ViewWillEnter } from '@ionic/angular';
 import { LocationService } from '../../service/location.service';
-import { LoaderIndicatorService } from 'src/app/shared/service/loader.inidcator.service';
+import { LoadingService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-location-list',
@@ -13,7 +13,7 @@ import { LoaderIndicatorService } from 'src/app/shared/service/loader.inidcator.
 export class LocationListComponent  implements ViewDidLeave, ViewWillEnter, OnDestroy {
 
   locations: LocationInterface[] = [];
-  busyloader!: LoaderIndicatorService;
+  busyloader!: LoadingService;
 
   subscriptions = new Subscription();
 
@@ -78,6 +78,7 @@ export class LocationListComponent  implements ViewDidLeave, ViewWillEnter, OnDe
           );
          },
         },
+        "Não",
       ],
     });
     alert.present();

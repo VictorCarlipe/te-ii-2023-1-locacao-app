@@ -26,11 +26,11 @@ export class LocationFormComponent  implements OnInit {
 
   ngOnInit(): void {
     const [url] = this.activatedRoute.snapshot.url;
-    this.editMode = url.path === 'edicao';
+    this.editMode = url.path === 'edit';
     this.createMode = !this.editMode;
 
     this.locationForm = this.formBuilder.group({
-      nome: 'Teste De Local',
+      name: 'Teste De Local',
       unit: 'XXI',
       capacity: 132,
       attributes:  ''
