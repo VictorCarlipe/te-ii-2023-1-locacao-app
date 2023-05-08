@@ -14,7 +14,9 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating">Nome:</ion-label>
-        <ion-input formControlName="name" placeholder="Digite o nome do local"></ion-input>
+        <ion-input formControlName="nome" placeholder="Digite o nome do local"></ion-input>
+        <ion-note slot="error" *ngIf="locationForm.controls['nome'].hasError('required')">O campo local é obrigatório!</ion-note>
+        <ion-note slot="error" *ngIf="locationForm.controls['nome'].hasError('maxlength')">O campo local deve conter até {{locationForm.controls['nome'].errors?.['maxlength'].requiredLength}} caracteres!</ion-note>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Unidade:</ion-label>
@@ -23,10 +25,12 @@
       <ion-item>
         <ion-label position="floating">Capacidade:</ion-label>
         <ion-input formControlName="capacity" type="number" placeholder="000"></ion-input>
+        <ion-note slot="error" *ngIf="locationForm.controls['capacity'].hasError('required')">O campo capacidade é obrigatório!</ion-note>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Atributos:</ion-label>
         <ion-input formControlName="attributes" placeholder="Digite os atributos"></ion-input>
+        <ion-note slot="error" *ngIf="locationForm.controls['attributes'].hasError('maxlength')">O campo atributos deve conter até {{locationForm.controls['attributes'].errors?.['maxlength'].requiredLength}} caracteres!</ion-note>
       </ion-item>
     </ion-list>
     <ion-fab horizontal="end" vertical="right">
