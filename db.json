@@ -78,33 +78,33 @@
       "attributes": ""
     }
   ],
-  "tenacy": [
+  "tenancy": [
     {
       "id": 1,
-      "locatario": 100000003,
-      "local": 2,
+      "render": 100000003,
+      "location": 2,
       "initialDate": "2023-05-25 19:20:00",
       "finalDate": "2023-05-25 20:30:00",
-      "objetivo": "MON",
-      "desciption": "Monitoria de Legislição Tributária"
+      "goal": "MON",
+      "description": "Monitoria de Legislição Tributária"
     },
     {
       "id": 2,
-      "locatario": 100000005,
-      "local": 1,
+      "render": 100000005,
+      "location": 1,
       "initialDate": "2023-05-26 19:00:00",
       "finalDate": "2023-05-25 21:00:00",
-      "objetivo": "MON",
-      "desciption": "Monitoria de Programação Orientada a Objetos"
+      "goal": "MON",
+      "description": "Monitoria de Programação Orientada a Objetos"
     },
     {
       "id": 3,
-      "locatario": 100000001,
-      "local": 5,
+      "render": 100000001,
+      "location": 5,
       "initialDate": "2023-05-26 19:00:00",
       "finalDate": "2023-05-25 21:00:00",
-      "objetivo": "TRE",
-      "desciption": "Treino de handebol para os jogos internos da Esucri"
+      "goal": "TRE",
+      "description": "Treino de handebol para os jogos internos da Esucri"
     }
   ]
 }

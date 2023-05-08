@@ -3,9 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { StudentService } from '../../service/student.service';
-import { AlertController, IonDatetime } from '@ionic/angular';
-import { LoadingService } from 'src/app/shared/service/loader.service';
-
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-student-form',
@@ -26,11 +24,10 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private studentService: StudentService,
     private alertController: AlertController,
-    private loadingService: LoadingService
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit():void {
-    this.loadingService
     this.initializeForm();
     this.loadStudentOnEditMode();
   }
@@ -76,7 +73,7 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
     this.router.navigate(['./student'])
   }
 
-  private loadStudentOnEditMode(){
+  private async loadStudentOnEditMode(){
     const [url] = this.activateRoute.snapshot.url;
     this.editMode = url.path === 'edit';
     this.createMode = !this.editMode;
@@ -86,7 +83,8 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
       this.id = id ? parseInt(id):-1;
 
       if(this.id !== -1){
-        //this.loadingService.on();
+        const busyLoader = await this.loadingController.create({spinner:'circular'})
+        busyLoader.present()
         this.studentService.getStudent(this.id).subscribe((student) => {
           this.studentForm.patchValue({
             id: student.id,
@@ -99,7 +97,7 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
             phase: student.phase.toString()
           })
         })
-        //this.loadingService.off();
+        busyLoader.dismiss()
       }
     }
   }

@@ -1,3 +1,91 @@
-<p>
-  tenancy-form works!
-</p>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      {{createMode ? 'Cadastro' : 'Edição'}} de Locação
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="tenancyForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Local:</ion-label>
+        <ion-select [compareWith]="compareWith" formControlName="location" placeholder="Selecione o local que deseja reservar">
+          <ion-select-option *ngFor="let l of locations" [value]="l">
+            {{l.nome}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Locatário:</ion-label>
+        <ion-select [compareWith]="compareWith" formControlName="render" placeholder="Selecione o local que deseja reservar">
+          <ion-select-option *ngFor="let r of renders" [value]="r">
+            {{r.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+
+      <ion-label position="floating">Data Inicial:</ion-label>
+      <ion-datetime-button datetime="initialDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime formControlName="initialDate"  [value]="initialDate" presentation="date" id="initialDate" showDefaultButtons="true" doneText="Selecionar" cancelText="cancelar" showDafaultTitle="true">
+              <span slot="title">Selecione a data inicial de locação</span>
+            </ion-datetime>  
+          </ng-template>
+        </ion-modal>
+        <ion-note slot="error" *ngIf="tenancyForm.controls['initialDate'].hasError('validInitialDate')">Data inicial inválida</ion-note>
+      </ion-item>   
+      
+      <ion-item>
+        <ion-label position="floating">Data Final:</ion-label>
+        <ion-datetime-button datetime="finalDate"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime formControlName="finalDate"  presentation="date" id="finalDate" showDefaultButtons="true" doneText="Selecionar" cancelText="cancelar" showDafaultTitle="true">
+              <span slot="title">Selecione a data final de locação</span>
+            </ion-datetime>  
+          </ng-template>
+        </ion-modal>
+        <ion-note slot="error" *ngIf="tenancyForm.controls['finalDate'].hasError('validFinalDate')">Data final inválida</ion-note>
+      </ion-item> 
+
+      <ion-item>
+        <ion-label position="floating">Objetivo:</ion-label>
+        <ion-select formControlName="goal" placeholder="Selecione o proprosito da locação">
+          <ion-select-option value="MOM">Monitoria</ion-select-option>
+          <ion-select-option value="ATE">Atendimento</ion-select-option>
+          <ion-select-option value="EVE">Eventos</ion-select-option>
+          <ion-select-option value="ENS">Grupo de Ensino</ion-select-option>
+          <ion-select-option value="TRE">Treinos</ion-select-option>
+          <ion-select-option value="OUT">Outro</ion-select-option>
+        </ion-select>
+        <ion-note slot="error" *ngIf="tenancyForm.controls['goal'].hasError('required')">Escolha um curso!</ion-note>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Descrição</ion-label>
+        <ion-textarea formControlName="description" placeholder="Descreve melhor a finalidade da sua reserva" [autoGrow]="true" rows="10"></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </form>
+  
+  
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="save()" [disabled]="tenancyForm.invalid">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab horizontal="start" vertical="bottom" slot="fixed">
+    <ion-fab-button color="light" (click)="cancel()">
+      <ion-icon name="close-circle"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
