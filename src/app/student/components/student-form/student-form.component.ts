@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, empty } from 'rxjs';
 import { StudentService } from '../../service/student.service';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { LoadingService } from 'src/app/shared/service/loader.service';
 
 @Component({
   selector: 'app-student-form',
@@ -16,7 +17,7 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
   subscriptions = new Subscription();
   createMode: boolean = false;
   editMode: boolean = false;
-  id!: number
+  id!: string | null
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -24,10 +25,12 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private studentService: StudentService,
     private alertController: AlertController,
+    private loadingService: LoadingService,
     private loadingController: LoadingController
   ) { }
 
   ngOnInit():void {
+    this.loadingService
     this.initializeForm();
     this.loadStudentOnEditMode();
   }
@@ -77,27 +80,29 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
     const [url] = this.activateRoute.snapshot.url;
     this.editMode = url.path === 'edit';
     this.createMode = !this.editMode;
-
+    
     if(this.editMode){
-      const id = this.activateRoute.snapshot.paramMap.get('id');
-      this.id = id ? parseInt(id):-1;
-
-      if(this.id !== -1){
+      this.id = this.activateRoute.snapshot.paramMap.get('id');
+      
+      if(this.id !== undefined){
+        //this.loadingService.on()
         const busyLoader = await this.loadingController.create({spinner:'circular'})
-        busyLoader.present()
+        //busyLoader.present()        
+        //busyLoader.dismiss()
         this.studentService.getStudent(this.id).subscribe((student) => {
           this.studentForm.patchValue({
             id: student.id,
+            registration: student.registration,
             name: student.name,
             datebirth: student.datebirth,
             gender: student.gender,
             email: student.email,
-            fone: student.fone,
+            phone: student.phone,
             course: student.course,
-            phase: student.phase.toString()
+            phase: student.phase
           })
+          //this.loadingService.off()
         })
-        busyLoader.dismiss()
       }
     }
   }
@@ -108,6 +113,13 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
 
   private initializeForm(){
     this.studentForm = this.formBuilder.group({
+      registration: [
+        100000000,
+        [ Validators.required,
+          Validators.min(100000000),
+          Validators.max(999999999)
+        ]
+      ],
       name: [
         'Nome qualquer',
         [
@@ -124,10 +136,11 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
         'nomequalquer@mailto.com',
         Validators.email
       ],
-      fone: [
-        '48999999999',
+      phone: [
+        48999999999,
         [ Validators.required,
-          Validators.minLength(11),
+          Validators.min(10000000000),
+          Validators.max(99999999999)
         ]
       ],
       course: 'adm',
@@ -137,18 +150,18 @@ export class StudentFormComponent  implements OnInit, OnDestroy {
 
   validMinAge(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const minute = 1000 * 60;
-      const hour = minute * 60;
-      const day = hour * 24;
-      const year = day * 365;
+      let minute = 1000 * 60;
+      let hour = minute * 60;
+      let day = hour * 24;
+      let year = day * 365;
       
-      const value =  new Date(control.value)
-      const now = new Date(Date.now())
-      const diff = (now.getTime() / year - value.getTime() / year)
+      let value =  new Date(control.value)
+      let now = new Date(Date.now())
+      let diff: number = (now.getTime() / year - value.getTime() / year)
       if (diff < 16){
-        return {invalidAge: value}
+        return {invalidAge: diff}
       }else if(diff > 150){
-        return {invalidAge: value}
+        return {invalidAge: diff}
       }
       return null;
     };

@@ -1,10 +1,11 @@
 export interface StudentInterface {
-    id?: number,
+    id?: string,
+    registration: number,
     name: string,
     datebirth: string,
     gender: string,
     email: string,
-    fone: string,
+    phone: number,
     course: string,
-    phase: number
+    phase: string
 }

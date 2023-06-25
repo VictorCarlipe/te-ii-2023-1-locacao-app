@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class StudentService {
   constructor(private http: HttpClient) { }
 
-  getStudent(id:number): Observable<StudentInterface>{
+  getStudent(id:string | null): Observable<StudentInterface>{
     return this.http.get<StudentInterface>(`${environment.apiUrl}/student/${id}`);
   }
 
