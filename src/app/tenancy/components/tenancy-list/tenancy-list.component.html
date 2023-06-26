@@ -11,7 +11,7 @@
   <ion-list>
     <ion-item *ngFor="let tenancy of tenancys">
       <ion-label>
-        {{tenancy.location}} - {{tenancy.render}}
+        {{tenancy.local.name}} - {{tenancy.student.name}}
       </ion-label>
       <ion-icon name="create" slot="end" [routerLink]="['../edit', tenancy.id]"></ion-icon>
       <ion-icon name="trash" slot="end" (click)="remove(tenancy)"></ion-icon>

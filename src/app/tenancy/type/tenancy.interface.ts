@@ -2,11 +2,11 @@ import { LocationInterface } from "src/app/location/type/location.interface";
 import { StudentInterface } from "src/app/student/type/student.interface";
 
 export interface TenancyInterface{
-    id?: number,
-    render:StudentInterface,
-    location: LocationInterface,
+    id?: string,
     initialDate: string,
     finalDate: string,
-    goal: string,
+    objective: string,
     description?: string
+    local: LocationInterface,
+    student:StudentInterface,
 }
