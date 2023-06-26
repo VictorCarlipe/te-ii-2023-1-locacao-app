@@ -65,7 +65,7 @@ export class TenancyListComponent  implements OnInit, OnDestroy, ViewDidLeave, V
   async remove(tenancy: TenancyInterface){
     const alert = await this.alertController.create({
       header: 'Confirmação de exclusão',
-      message: `Deseja excluir a locação ${tenancy.location.nome} - ${tenancy.render.name}`,
+      message: `Deseja excluir a locação ${tenancy.local.name} - ${tenancy.student.name}`,
       buttons: [
         {
           text: 'Sim',

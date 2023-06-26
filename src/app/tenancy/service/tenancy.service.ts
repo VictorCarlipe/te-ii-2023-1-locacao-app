@@ -11,7 +11,7 @@ export class TenancyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getTenancy(id: number): Observable<TenancyInterface>{
+  getTenancy(id: string | null): Observable<TenancyInterface>{
     return this.httpClient.get<TenancyInterface>(
       `${environment.apiUrl}/tenancy/${id}`
     )

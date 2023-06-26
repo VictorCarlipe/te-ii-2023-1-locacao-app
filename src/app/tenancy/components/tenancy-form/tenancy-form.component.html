@@ -14,18 +14,18 @@
     <ion-list>
       <ion-item>
         <ion-label position="floating">Local:</ion-label>
-        <ion-select [compareWith]="compareWith" formControlName="location" placeholder="Selecione o local que deseja reservar">
-          <ion-select-option *ngFor="let l of locations" [value]="l">
-            {{l.nome}}
+        <ion-select [compareWith]="compareWith" formControlName="local" placeholder="Selecione o local a ser reservado">
+          <ion-select-option *ngFor="let l of locals" [value]="l">
+            {{l.name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
       
       <ion-item>
         <ion-label position="floating">Locatário:</ion-label>
-        <ion-select [compareWith]="compareWith" formControlName="render" placeholder="Selecione o local que deseja reservar">
-          <ion-select-option *ngFor="let r of renders" [value]="r">
-            {{r.name}}
+        <ion-select [compareWith]="compareWith" formControlName="student" placeholder="Selecione o aluno(a) solicitante">
+          <ion-select-option *ngFor="let s of students" [value]="s">
+            {{s.name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
@@ -35,7 +35,7 @@
       <ion-datetime-button datetime="initialDate"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime formControlName="initialDate"  [value]="initialDate" presentation="date" id="initialDate" showDefaultButtons="true" doneText="Selecionar" cancelText="cancelar" showDafaultTitle="true">
+            <ion-datetime formControlName="initialDate" id="initialDate" presentation="date" showDefaultButtons="true" doneText="Selecionar" cancelText="Cancelar" showDafaultTitle="true">
               <span slot="title">Selecione a data inicial de locação</span>
             </ion-datetime>  
           </ng-template>
@@ -48,7 +48,7 @@
         <ion-datetime-button datetime="finalDate"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime formControlName="finalDate"  presentation="date" id="finalDate" showDefaultButtons="true" doneText="Selecionar" cancelText="cancelar" showDafaultTitle="true">
+            <ion-datetime formControlName="finalDate" id="finalDate" presentation="date" showDefaultButtons="true" doneText="Selecionar" cancelText="Cancelar" showDafaultTitle="true">
               <span slot="title">Selecione a data final de locação</span>
             </ion-datetime>  
           </ng-template>
@@ -58,20 +58,20 @@
 
       <ion-item>
         <ion-label position="floating">Objetivo:</ion-label>
-        <ion-select formControlName="goal" placeholder="Selecione o proprosito da locação">
-          <ion-select-option value="MOM">Monitoria</ion-select-option>
+        <ion-select formControlName="objective" placeholder="Selecione o proprosito da locação">
+          <ion-select-option value="MON">Monitoria</ion-select-option>
           <ion-select-option value="ATE">Atendimento</ion-select-option>
           <ion-select-option value="EVE">Eventos</ion-select-option>
           <ion-select-option value="ENS">Grupo de Ensino</ion-select-option>
           <ion-select-option value="TRE">Treinos</ion-select-option>
           <ion-select-option value="OUT">Outro</ion-select-option>
         </ion-select>
-        <ion-note slot="error" *ngIf="tenancyForm.controls['goal'].hasError('required')">Escolha um curso!</ion-note>
+        <ion-note slot="error" *ngIf="tenancyForm.controls['objective'].hasError('required')">Escolha um curso!</ion-note>
       </ion-item>
       
       <ion-item>
         <ion-label position="floating">Descrição</ion-label>
-        <ion-textarea formControlName="description" placeholder="Descreve melhor a finalidade da sua reserva" [autoGrow]="true" rows="10"></ion-textarea>
+        <ion-textarea formControlName="description" placeholder="Descreve melhor a finalidade da reserva" [autoGrow]="true" rows="10"></ion-textarea>
       </ion-item>
     </ion-list>
   </form>

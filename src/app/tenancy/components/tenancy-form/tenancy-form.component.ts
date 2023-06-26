@@ -20,11 +20,10 @@ export class TenancyFormComponent  implements OnInit {
   subscription = new Subscription()
   createMode: boolean = false;
   editMode: boolean = false;
-  id!: number
-  renders: StudentInterface[]=[];
-  locations: LocationInterface[]=[];
+  id!: string | null;
+  students: StudentInterface[]=[];
+  locals: LocationInterface[]=[];
   initialDate!: string;
-
 
   minute = 1000 * 60;
   hour = this.minute * 60;
@@ -91,28 +90,28 @@ export class TenancyFormComponent  implements OnInit {
   }
 
   private async loadRenders(){
-    const busyLoader = await this.loadingController.create({spinner:'circular'})
-    busyLoader.present()
+    //const busyLoader = await this.loadingController.create({spinner:'circular'})
+    //busyLoader.present()
 
     this.subscription.add(
       this.renderService.getStudents().subscribe((response) => {
-        this.renders = response;
-        busyLoader.dismiss();
+        this.students = response;
+        //busyLoader.dismiss();
       })
     );
   }
 
 
   private async loadLocations(){
-    const busyLoader = await this.loadingController.create({spinner:'circular'})
-    busyLoader.present()
+    //const busyLoader = await this.loadingController.create({spinner:'circular'})
+    //busyLoader.present()
 
     this.subscription.add(
       this.locationService.getLocations().subscribe((response) => {
-        this.locations = response;
-        busyLoader.dismiss();
+        this.locals = response;
       })
-    );
+      );
+    //busyLoader.dismiss();
   }
 
   private async loadTenancyOnEditMode(){
@@ -122,20 +121,20 @@ export class TenancyFormComponent  implements OnInit {
     this.createMode = !this.editMode;
 
     if(this.editMode){
-      const id = this.activatedRoute.snapshot.paramMap.get('id');
-      this.id = id ? parseInt(id) : -1;
+      this.id = this.activatedRoute.snapshot.paramMap.get('id');
 
-      if(this.id !== -1){
+      if(this.id !== undefined){
         busyLoader.present()
         this.tenancyService.getTenancy(this.id).subscribe((tenancy) => {
           this.tenancyForm.patchValue({
-            render: tenancy.render,
-            location: tenancy.location,
+            student: tenancy.student,
+            local: tenancy.local,
             initialDate: tenancy.initialDate,
             finalDate: tenancy.finalDate,
-            goal: tenancy.goal,
+            objective: tenancy.objective,
             description: tenancy.description
           })
+          this.initialDate = tenancy.initialDate;
           busyLoader.dismiss();
         })
       }
@@ -144,17 +143,17 @@ export class TenancyFormComponent  implements OnInit {
 
   private initializeForm(){
     this.tenancyForm = this.formBuilder.group({
-      render: '100000001',
-      location: '1',
+      student: '',
+      local: '',
       initialDate: [
-        '2023-05-08',
+        '2023-06-27',
         this.validInitialDate(),
       ],
       finalDate: [
-        '2023-05-10',
+        '2023-06-30',
         this.validFinalDate(this.initialDate),
       ],
-      goal: 'MON',
+      objective: 'MON',
       description:[
         '',
         Validators.maxLength(300),
