@@ -1,5 +1,5 @@
 export interface LocationInterface {
-    id: number
+    id: string
     nome: string
     unit: string
     capacity: number

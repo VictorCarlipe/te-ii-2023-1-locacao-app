@@ -11,6 +11,10 @@ export class LocationService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getLocation(id:string | null): Observable<LocationInterface>{
+    return this.httpClient.get<LocationInterface>(`${environment.apiUrl}/location/${id}`);
+  }
+
   getLocations(): Observable<LocationInterface[]> {
     return this.httpClient.get<LocationInterface[]>(
       `${environment.apiUrl}/location`
@@ -19,6 +23,10 @@ export class LocationService {
 
   save(location: LocationInterface): Observable<LocationInterface> {
     return this.httpClient.post<LocationInterface>(`${environment.apiUrl}/location`, location);
+  }
+
+  update(location: LocationInterface): Observable<LocationInterface>{
+    return this.httpClient.put<LocationInterface>(`${environment.apiUrl}/location/${location.id}`, location);
   }
 
   remove(location: LocationInterface):Observable<void> {

@@ -33,14 +33,14 @@
         <ion-note slot="error" *ngIf="locationForm.controls['attributes'].hasError('maxlength')">O campo atributos deve conter até {{locationForm.controls['attributes'].errors?.['maxlength'].requiredLength}} caracteres!</ion-note>
       </ion-item>
     </ion-list>
-    <ion-fab horizontal="end" vertical="right">
-      <ion-fab-button (click)="save()">
-        <ion-icon name="checkmark"></ion-icon>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button (click)="save()" [disabled]="locationForm.invalid">
+        <ion-icon name="save"></ion-icon>
       </ion-fab-button>
-    </ion-fab>
-    <ion-fab horizontal="start" vertical="left">
+  </ion-fab>
+    <ion-fab horizontal="start" vertical="bottom" slot="fixed">
       <ion-fab-button color="light" (click)="cancel()">
-        <ion-icon name="close"></ion-icon>
+        <ion-icon name="close-circle"></ion-icon>
       </ion-fab-button>
     </ion-fab>
   </form>
